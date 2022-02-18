@@ -4,12 +4,33 @@ on: workflow_dispatch
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
   DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
+  APP_NAME: prometheus
 
 jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GOV.UK PaaS
+      - name: Install Cloud Foundry CLI
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf8-cli
+
+      - name: Deploy Prometheus to GOV.UK PaaS
+        env:
+          CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+          CF_SPACE: ${{ secrets.CF_SPACE }}
+          DOCKER_TAG: '${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest'
+        run: |
+          cf api $CF_API_ENDPOINT
+          cf auth $CF_USERNAME $CF_PASSWORD
+          cf target -o $CF_ORG -s $CF_SPACE
+          CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push ${{ env.APP_NAME }} \
+            --docker-image $DOCKER_TAG \
+            --docker-username ${{ github.actor }}
