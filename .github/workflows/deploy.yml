@@ -1,0 +1,15 @@
+name: 'GOV.UK PaaS deployment'
+
+on: workflow_dispatch
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
+
+jobs:
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GOV.UK PaaS
