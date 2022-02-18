@@ -26,10 +26,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        env:
-          DOCKER_TAG: '${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest'
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: $DOCKER_TAG
+          tags: '${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest'
