@@ -1,15 +1,14 @@
-name: 'Build prometheus image'
+name: Build prometheus image
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
-  DOCKER_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest
+  DOCKER_IMAGE_TAG: '${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest'
 
 jobs:
   build:
