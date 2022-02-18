@@ -1,4 +1,4 @@
-name: 'GOV.UK PaaS deployment'
+name: GOV.UK PaaS deployment
 
 on: workflow_dispatch
 
