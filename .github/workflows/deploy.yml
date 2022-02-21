@@ -3,8 +3,6 @@ name: GOV.UK PaaS deployment
 on: workflow_dispatch
 
 env:
-  REGISTRY: ghcr.io
-  DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
   APP_NAME: prometheus
 
 jobs:
@@ -25,11 +23,8 @@ jobs:
           CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
           CF_ORG: ${{ secrets.CF_ORG }}
           CF_SPACE: ${{ secrets.CF_SPACE }}
-          DOCKER_TAG: '${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest'
         run: |
           cf api $CF_API_ENDPOINT
           cf auth $CF_USERNAME $CF_PASSWORD
           cf target -o $CF_ORG -s $CF_SPACE
-          CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push ${{ env.APP_NAME }} \
-            --docker-image $DOCKER_TAG \
-            --docker-username ${{ github.actor }}
+          CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push ${{ env.APP_NAME }} --docker-username ${{ github.actor }}

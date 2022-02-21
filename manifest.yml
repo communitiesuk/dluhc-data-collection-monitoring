@@ -1,0 +1,12 @@
+---
+applications:
+- name: prometheus
+    docker:
+      image: ghcr.io/communitiesuk/dluhc-data-collection-monitoring/prometheus:latest
+  instances: 1
+  memory: 2G
+  disk_quota: 2G
+  routes:
+  - route: 	prometheus-dluhc-core.london.cloudapps.digital
+  services:
+  - prometheus-influxdb
