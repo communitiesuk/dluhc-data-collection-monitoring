@@ -18,7 +18,7 @@ jobs:
           INFLUXDB_SERVER: ${{ secrets.INFLUXDB_SERVER }}
           INFLUXDB_USER: ${{ secrets.INFLUXDB_USER }}
           INFLUXDB_PASSWORD: ${{ secrets.INFLUXDB_PASSWORD }}
-          PROMETHEUS_USER: ${{ secrets.PROMETHEUS_USER }}
+          PROMETHEUS_USERNAME: ${{ secrets.PROMETHEUS_USERNAME }}
           # Password is encrypted via bcrypt hashing
           PROMETHEUS_PASSWORD: ${{ secrets.PROMETHEUS_PASSWORD }}
         run: make prometheus_config
