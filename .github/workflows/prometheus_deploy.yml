@@ -39,4 +39,4 @@ jobs:
           CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push $APP_NAME \
             --docker-image $DOCKER_TAG \
             --docker-username ${{ github.actor }}
-          cf add-network-policy $APP_NAME --destination-app $EXPORTER_APP_NAME --protocol tcp --port 8080
+          cf add-network-policy $APP_NAME $EXPORTER_APP_NAME
