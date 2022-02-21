@@ -30,6 +30,6 @@ jobs:
           cf api $CF_API_ENDPOINT
           cf auth $CF_USERNAME $CF_PASSWORD
           cf target -o $CF_ORG -s $CF_SPACE
-          CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push ${{ env.APP_NAME }} \
+          CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push ${{ env.APP_NAME }} -f ./manifest.yml \
             --docker-image $DOCKER_TAG \
             --docker-username ${{ github.actor }}
