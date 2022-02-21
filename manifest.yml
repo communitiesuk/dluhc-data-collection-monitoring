@@ -1,8 +1,8 @@
 ---
 applications:
 - name: prometheus
-    docker:
-      image: ghcr.io/communitiesuk/dluhc-data-collection-monitoring/prometheus:latest
+  docker:
+    image: ghcr.io/communitiesuk/dluhc-data-collection-monitoring/prometheus:latest
   instances: 1
   memory: 2G
   disk_quota: 2G
