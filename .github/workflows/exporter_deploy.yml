@@ -1,11 +1,9 @@
-name: GOV.UK PaaS deployment
+name: Metrics exporter deployment on GOV.UK PaaS
 
 on: workflow_dispatch
 
 env:
-  REGISTRY: ghcr.io
-  DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
-  APP_NAME: prometheus
+  APP_NAME: prometheus-exporter
 
 jobs:
   deploy:
@@ -13,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          repository: alphagov/paas-prometheus-exporter
 
       - name: Install Cloud Foundry CLI
         run: |
@@ -23,16 +23,21 @@ jobs:
 
       - name: Deploy Prometheus to GOV.UK PaaS
         env:
+          APP_NAME: ${{ env.APP_NAME }}
           CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
-          CF_USERNAME: ${{ secrets.CF_USERNAME }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
           CF_ORG: ${{ secrets.CF_ORG }}
           CF_SPACE: ${{ secrets.CF_SPACE }}
-          DOCKER_TAG: '${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest'
+          CF_DEPLOY_USERNAME: ${{ secrets.CF_DEPLOY_USERNAME}}
+          CF_DEPLOY_PASSWORD: ${{ secrets.CF_DEPLOY_PASSWORD }}
+          CF_AUDIT_USERNAME: ${{ secrets.CF_AUDIT_USERNAME }}
+          CF_AUDIT_PASSWORD: ${{ secrets.CF_AUDIT_PASSWORD }}
         run: |
           cf api $CF_API_ENDPOINT
-          cf auth $CF_USERNAME $CF_PASSWORD
+          cf auth $CF_DEPLOY_USERNAME $CF_DEPLOY_PASSWORD
           cf target -o $CF_ORG -s $CF_SPACE
-          CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push ${{ env.APP_NAME }} -f ./manifest.yml \
-            --docker-image $DOCKER_TAG \
-            --docker-username ${{ github.actor }}
+          cf push --no-start $APP_NAME
+          cf set env API_ENDPOINT $CF_API_ENDPOINT
+          cf set env USERNAME $CF_AUDIT_USER
+          cf set env PASSWORD $CF_AUDIT_PASSWORD
+          cf set env SCRAPE_INTERVAL 15
+          cf push $APP_NAME
