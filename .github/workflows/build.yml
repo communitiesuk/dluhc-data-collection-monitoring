@@ -5,6 +5,12 @@ on: workflow_dispatch
 env:
   REGISTRY: ghcr.io
   DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
+  INFLUXDB_SERVER: ${{ secrets.INFLUXDB_SERVER }}
+  INFLUXDB_USER: ${{ secrets.INFLUXDB_USER }}
+  INFLUXDB_PASSWORD: ${{ secrets.INFLUXDB_PASSWORD }}
+  PROMETHEUS_USER: ${{ secrets.PROMETHEUS_USER }}
+  # Password is encrypted via bcrypt hashing
+  PROMETHEUS_PASSWORD: ${{ secrets.PROMETHEUS_PASSWORD }}
 
 jobs:
   build:
