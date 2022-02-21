@@ -35,9 +35,9 @@ jobs:
           cf api $CF_API_ENDPOINT
           cf auth $CF_DEPLOY_USERNAME $CF_DEPLOY_PASSWORD
           cf target -o $CF_ORG -s $CF_SPACE
-          cf push --no-start $APP_NAME
+          cf push --no-start $APP_NAME -f ./manifest.yml
           cf set env API_ENDPOINT $CF_API_ENDPOINT
           cf set env USERNAME $CF_AUDIT_USER
           cf set env PASSWORD $CF_AUDIT_PASSWORD
           cf set env SCRAPE_INTERVAL 15
-          cf push $APP_NAME
+          cf push $APP_NAME -f ./manifest.yml
