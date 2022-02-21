@@ -16,11 +16,11 @@ scrape_configs:
 remote_read:
   - url: https://$INFLUXDB_SERVER/api/v1/prom/read?db=defaultdb
     basic_auth:
-      username: $INFLUXDB_USERNAME
+      username: $INFLUXDB_USER
       password: $INFLUXDB_PASSWORD
 
 remote_write:
   - url: https://$INFLUXDB_SERVER/api/v1/prom/write?db=defaultdb
     basic_auth:
-      username: $INFLUXDB_USERNAME
+      username: $INFLUXDB_USER
       password: $INFLUXDB_PASSWORD
