@@ -25,7 +25,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install cf8-cli
 
-      - name: Deploy Prometheus to GOV.UK PaaS
+      - name: Deploy Prometheus exporter to GOV.UK PaaS
         env:
           APP_NAME: ${{ env.APP_NAME }}
           CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
@@ -43,5 +43,4 @@ jobs:
           cf set-env $APP_NAME API_ENDPOINT $CF_API_ENDPOINT
           cf set-env $APP_NAME USERNAME $CF_AUDIT_USERNAME
           cf set-env $APP_NAME PASSWORD $CF_AUDIT_PASSWORD
-          cf set-env $APP_NAME SCRAPE_INTERVAL 15
           cf push $APP_NAME -f manifest.yml -p exporter
