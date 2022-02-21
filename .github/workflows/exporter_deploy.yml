@@ -40,7 +40,7 @@ jobs:
           cf auth $CF_DEPLOY_USERNAME $CF_DEPLOY_PASSWORD
           cf target -o $CF_ORG -s $CF_SPACE
           cf push --no-start $APP_NAME -f manifest.yml -p exporter
-          cf set-env $APP_NAME API_ENDPOINT $CF_API_ENDPOINT
+          cf set-env $APP_NAME API_ENDPOINT "https://${CF_API_ENDPOINT}"
           cf set-env $APP_NAME USERNAME $CF_AUDIT_USERNAME
           cf set-env $APP_NAME PASSWORD $CF_AUDIT_PASSWORD
           cf push $APP_NAME -f manifest.yml -p exporter
