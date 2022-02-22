@@ -13,13 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Generate prometheus configuration
-        env:
-          INFLUXDB_SERVER: ${{ secrets.INFLUXDB_SERVER }}
-          INFLUXDB_USER: ${{ secrets.INFLUXDB_USER }}
-          INFLUXDB_PASSWORD: ${{ secrets.INFLUXDB_PASSWORD }}
-        run: make prometheus_config
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
