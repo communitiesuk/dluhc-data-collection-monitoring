@@ -4,8 +4,8 @@ applications:
   docker:
     image: ghcr.io/communitiesuk/dluhc-data-collection-monitoring/prometheus:latest
   instances: 1
-  memory: 2G
-  disk_quota: 2G
+  memory: 1G
+  disk_quota: 1G
   routes:
   - route: prometheus-dluhc-core.apps.internal
   services:
