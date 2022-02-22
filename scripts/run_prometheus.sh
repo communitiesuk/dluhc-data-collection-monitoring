@@ -11,3 +11,5 @@ INFLUXDB_WRITE_USERNAME=$(echo "${INFLUXDB_CREDENTIALS}" | jq '.remote_write[0].
 INFLUXDB_WRITE_PASSWORD=$(echo "${INFLUXDB_CREDENTIALS}" | jq '.remote_write[0].basic_auth.password')
 
 envsubst < /etc/prometheus/prometheus_template.yml > /etc/prometheus/prometheus.yml
+
+/bin/prometheus "$@"
