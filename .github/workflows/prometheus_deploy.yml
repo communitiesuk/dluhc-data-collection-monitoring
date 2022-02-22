@@ -7,6 +7,7 @@ env:
   DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
   APP_NAME: prometheus
   PRIVATE_APP_NAME: prometheus-exporter
+  PRIVATE_APP_URL: http://prometheus-exporter-dluhc-core.apps.internal:8080
 
 jobs:
   deploy:
@@ -25,7 +26,7 @@ jobs:
       - name: Deploy Prometheus to GOV.UK PaaS
         env:
           APP_NAME: ${{ env.APP_NAME }}
-          EXPORTER_APP_NAME: ${{ env.EXPORTER_APP_NAME }}
+          PRIVATE_APP_URL: ${{ env.PRIVATE_APP_URL }}
           CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
           CF_ORG: ${{ secrets.CF_ORG }}
           CF_SPACE: ${{ secrets.CF_SPACE }}
@@ -37,6 +38,5 @@ jobs:
           cf auth $CF_DEPLOY_USERNAME $CF_DEPLOY_PASSWORD
           cf target -o $CF_ORG -s $CF_SPACE
           CF_DOCKER_PASSWORD=${{ secrets.GITHUB_TOKEN }} cf push $APP_NAME \
-            --docker-image $DOCKER_TAG \
             --docker-username ${{ github.actor }}
           cf add-network-policy $APP_NAME $PRIVATE_APP_NAME
