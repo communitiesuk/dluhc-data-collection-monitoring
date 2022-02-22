@@ -7,7 +7,7 @@ applications:
   memory: 2G
   disk_quota: 2G
   routes:
-  - route: prometheus-dluhc-core.london.cloudapps.digital
+  - route: prometheus-dluhc-core.apps.internal
   services:
   - prometheus-influxdb
 
@@ -20,3 +20,25 @@ applications:
   - route: prometheus-exporter-dluhc-core.apps.internal
   env:
     GOPACKAGENAME: github.com/alphagov/paas-prometheus-exporter
+
+- name: grafana
+  docker:
+    image: grafana/grafana-oss:8.3.6
+  instances: 1
+  memory: 512M
+  env:
+    GF_SERVER_ROOT_URL: https://grafana-dluhc-core.london.cloudapps.digital
+    GF_SERVER_HTTP_ADDR: "0.0.0.0"
+    GF_DATABASE_SSL_MODE: "require"
+  command: >
+    export GF_SERVER_HTTP_PORT=$PORT &&
+    export GF_DATABASE_URL=$DATABASE_URL &&
+    export GF_ALERTING_ENABLED=true &&
+    export GF_SMTP_ENABLED=true &&
+    export GF_SECURITY_ADMIN_USER=$GRAFANA_ADMIN_USERNAME &&
+    export GF_SECURITY_ADMIN_PASSWORD=$GRAFANA_ADMIN_PASSWORD &&
+    /run.sh
+  routes:
+    - route: grafana-dluhc-core.london.cloudapps.digital
+  services:
+    - grafana-db
