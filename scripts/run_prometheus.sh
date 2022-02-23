@@ -10,6 +10,13 @@ INFLUXDB_WRITE_URL=$(echo "${INFLUXDB_CREDENTIALS}" | jq '.remote_write[0].url')
 INFLUXDB_WRITE_USERNAME=$(echo "${INFLUXDB_CREDENTIALS}" | jq '.remote_write[0].basic_auth.username')
 INFLUXDB_WRITE_PASSWORD=$(echo "${INFLUXDB_CREDENTIALS}" | jq '.remote_write[0].basic_auth.password')
 
-call envsubst < /etc/prometheus/prometheus_template.yml > /etc/prometheus/prometheus.yml
+export INFLUXDB_READ_URL
+export INFLUXDB_READ_USERNAME
+export INFLUXDB_READ_PASSWORD
+export INFLUXDB_WRITE_URL
+export INFLUXDB_WRITE_USERNAME
+export INFLUXDB_WRITE_PASSWORD
+
+envsubst < /etc/prometheus/prometheus_template.yml > /etc/prometheus/prometheus.yml
 
 /usr/bin/prometheus "$@"
