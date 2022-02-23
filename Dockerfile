@@ -2,7 +2,7 @@
 FROM alpine:latest
 RUN apk --no-cache add \
     jq \
-    envsubst \
+    gettext \
     prometheus
 
 COPY prometheus_template.yml /etc/prometheus/prometheus_template.yml
