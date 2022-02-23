@@ -35,7 +35,8 @@ jobs:
           cf api $CF_API_ENDPOINT
           cf auth $CF_DEPLOY_USERNAME $CF_DEPLOY_PASSWORD
           cf target -o $CF_ORG -s $CF_SPACE
+          cf push --no-start $APP_NAME
           cf set-env $APP_NAME GRAFANA_ADMIN_USERNAME $GRAFANA_ADMIN_USERNAME
           cf set-env $APP_NAME GRAFANA_ADMIN_PASSWORD $GRAFANA_ADMIN_PASSWORD
-          cf push $APP_NAME
           cf add-network-policy $APP_NAME $PRIVATE_APP_NAME
+          cf push $APP_NAME
