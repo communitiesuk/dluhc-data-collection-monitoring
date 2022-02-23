@@ -32,10 +32,10 @@ applications:
     GF_ALERTING_ENABLED: true
     GF_SMTP_ENABLED: true
   command: >
-    export GF_SERVER_HTTP_PORT=$PORT &&
-    export GF_DATABASE_URL=$DATABASE_URL &&
-    export GF_SECURITY_ADMIN_USER=$GRAFANA_ADMIN_USERNAME &&
-    export GF_SECURITY_ADMIN_PASSWORD=$GRAFANA_ADMIN_PASSWORD &&
+    export GF_SERVER_HTTP_PORT="${PORT}" &&
+    export GF_DATABASE_URL="${DATABASE_URL}" &&
+    export GF_SECURITY_ADMIN_USER="${GRAFANA_ADMIN_USERNAME}" &&
+    export GF_SECURITY_ADMIN_PASSWORD="${GRAFANA_ADMIN_PASSWORD}" &&
     /run.sh
   routes:
     - route: grafana-dluhc-core.london.cloudapps.digital
