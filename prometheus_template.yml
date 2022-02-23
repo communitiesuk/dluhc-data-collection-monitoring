@@ -8,16 +8,16 @@ scrape_configs:
   # scheme defaults to 'http'.
   - job_name: "paas metrics"
     static_configs:
-      - targets: [ $PRIVATE_APP_URL ]
+      - targets: [ ${PRIVATE_APP_URL} ]
 
 remote_read:
-  - url: $INFLUXDB_READ_URL
+  - url: ${INFLUXDB_READ_URL}
     basic_auth:
-      username: $INFLUXDB_READ_USERNAME
-      password: $INFLUXDB_READ_PASSWORD
+      username: ${INFLUXDB_READ_USERNAME}
+      password: ${INFLUXDB_READ_PASSWORD}
 
 remote_write:
-  - url: $INFLUXDB_WRITE_URL
+  - url: ${INFLUXDB_WRITE_URL}
     basic_auth:
-      username: $INFLUXDB_WRITE_USERNAME
-      password: $INFLUXDB_WRITE_PASSWORD
+      username: ${INFLUXDB_WRITE_USERNAME}
+      password: ${INFLUXDB_WRITE_PASSWORD}
