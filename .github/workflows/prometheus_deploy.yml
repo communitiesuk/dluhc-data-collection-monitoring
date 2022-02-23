@@ -7,7 +7,7 @@ env:
   DOCKER_IMAGE: communitiesuk/dluhc-data-collection-monitoring/prometheus
   APP_NAME: prometheus
   PRIVATE_APP_NAME: prometheus-exporter
-  PRIVATE_APP_URL: http://prometheus-exporter-dluhc-core.apps.internal:8080
+  PRIVATE_APP_URL: prometheus-exporter-dluhc-core.apps.internal:8080
 
 jobs:
   deploy:
