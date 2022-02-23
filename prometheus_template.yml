@@ -8,7 +8,7 @@ scrape_configs:
   # scheme defaults to 'http'.
   - job_name: "paas metrics"
     static_configs:
-      - targets: [ ${PRIVATE_APP_URL} ]
+      - targets: [ "${PRIVATE_APP_URL}" ]
 
 remote_read:
   - url: ${INFLUXDB_READ_URL}
