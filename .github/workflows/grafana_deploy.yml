@@ -38,5 +38,5 @@ jobs:
           cf push --no-start $APP_NAME
           cf set-env $APP_NAME GRAFANA_ADMIN_USERNAME $GRAFANA_ADMIN_USERNAME
           cf set-env $APP_NAME GRAFANA_ADMIN_PASSWORD $GRAFANA_ADMIN_PASSWORD
-          cf add-network-policy $APP_NAME $PRIVATE_APP_NAME
+          cf add-network-policy $APP_NAME $PRIVATE_APP_NAME --port 9090
           cf push $APP_NAME
