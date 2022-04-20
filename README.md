@@ -44,16 +44,16 @@ Note: Add the `secrets` prefix in the pipeline definition
 - **CF_DEPLOY_USERNAME**\
   The username for the GOV.UK PaaS account used to login and deploy the exporter, must
   have [space developer](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#space-developer)
-  permissions for the organisation and space configured
+  permissions for the space configured within the organisation
 - **CF_DEPLOY_PASSWORD**\
-  The password used by CF_DEPLOY_USERNAME
+  The password used by `CF_DEPLOY_USERNAME`
 - **CF_AUDIT_USERNAME**\
   The username for the GOV.UK PaaS account used by the exporter to collect application and service metrics. This user
   must have [space auditor](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#space-auditor) permissions for the
   organisation and every space where the exporter needs to collect metrics, for example `staging`, `monitoring`
   and `production`
 - **CF_AUDIT_PASSWORD**\
-  The password used by CF_AUDIT_USERNAME
+  The password used by `CF_AUDIT_USERNAME`
 
 #### Changes required in `manifest.yml`
 
