@@ -22,7 +22,7 @@ This codebase relies on an existing monitoring space and automates the creation 
 This pipeline fetches the prometheus exporter project on Github, configure required environment variables and deploy it
 to GOV.UK PaaS
 
-#### Environment variables to change
+#### Environment variables to change in `exporter_deploy.yml`
 
 Note: Add the `env` prefix in the pipeline definition
 
@@ -62,8 +62,35 @@ Note: Add the `secrets` prefix in the pipeline definition
 - Be sure that your route ends with `.apps.internal` so that the exporter is
   a [private application](https://docs.cloud.service.gov.uk/deploying_apps.html#deploying-private-apps)
 
-### Build Prometheus docker image
+### Prometheus docker image creation
+
+In order to ease Prometheus updates and deployments, we decided to rely on a Prometheus binary managed by package
+manager instead of using the Cloud Foundry binary buildpack.
+
+The official Prometheus Docker image uses BusyBox which has no package manager by default. We settled for the latest
+Alpine Linux docker image, installing the Prometheus binary and dependencies required for configuration templates.
+
+The `Dockerfile` present at the root of the repository is used to build our Prometheus docker image which is stored into
+the Github Container Registry (ghcr.io).
+
+#### Environment variables to change in `prometheus_build.yml`
+
+Note: Add the `env` prefix in the pipeline definition
+
+- **DOCKER_IMAGE**\
+  This is the path used for storing your docker image as a package linked to your repository, for example
+  `communitiesuk/{your_repository}/prometheus`
+
+#### Prometheus configuration using InfluxDB as remote read and write
+
+When building your docker image, a script `run_prometheus.sh` (which has the execution bit set), is copied to the docker
+image and will be used as entrypoint. The configuration template `prometheus_template.yml` is also copied. During the
+container startup, this script will fetch the InfluxDB configuration from GOV.UK PaaS and generate a `prometheus.yml`
+configuration filling the template file.
 
 ### Prometheus deployment on GOV.UK PaaS
+
+Once your Prometheus docker image is built and stored on Github Container Registry, you may want to deploy Prometheus on
+GOV.UK PaaS.
 
 ### Metrics exporter deployment on GOV.UK PaaS
